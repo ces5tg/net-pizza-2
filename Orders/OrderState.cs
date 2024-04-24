@@ -2,9 +2,11 @@ namespace BlazingPizza;
 
 public class OrderState
 {
-    public bool ShowingConfigureDialog => ConfiguringPizza is not null;
+    public bool ShowingConfigureDialog => ConfiguringPizza is not null ;
     public Pizza? ConfiguringPizza { get; private set; }
     public Order Order { get; private set; } = new();
+   public List<PizzaTopping> Topping { get; set; } = new List<PizzaTopping>();
+
 
     public void ShowConfigurePizzaDialog(PizzaSpecial special)
     {
@@ -30,6 +32,12 @@ public class OrderState
 
     public void RemoveConfiguredPizza(Pizza pizza) =>
         Order.Pizzas.Remove(pizza);
+    public void RemoveConfiguredTopping(PizzaTopping topping){
+
+        Topping.Remove(topping);
+
+    }
+        
 
     public void ResetOrder() => Order = new();
 }

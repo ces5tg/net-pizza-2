@@ -22,12 +22,28 @@ public class Pizza
     public List<PizzaTopping> Toppings { get; set; } = default!;
 
     public decimal GetBasePrice() =>
-        (decimal)Size / DefaultSize * Special?.BasePrice ?? 1;
+        Special is { FixedSize: not null }
+            ? Special.BasePrice
+            : (decimal)Size / DefaultSize * Special?.BasePrice ?? 1;
 
+    public decimal GetToppingsPrice(List<PizzaTopping> toppings)
+    {
+        decimal toppingsPrice = 0;
+
+        // Sumar el precio de cada topping
+        foreach (var topping in toppings)
+        {
+            toppingsPrice += topping.Topping.Price;
+        }
+        return toppingsPrice;
+    }
     public decimal GetTotalPrice() => GetBasePrice();
 
     public string GetFormattedTotalPrice() =>
         GetTotalPrice().ToString("0.00");
+    public string GetFormattedToppingsPrice(List<PizzaTopping> toppings) =>
+         (GetToppingsPrice(toppings) + GetTotalPrice()).ToString("0.00");
+    
 }
 
 [JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Serialization)]

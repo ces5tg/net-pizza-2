@@ -18,6 +18,7 @@ using (var scope = scopeFactory.CreateScope())
     if (await db.Database.EnsureCreatedAsync())
     {
         await SeedData.InitializeAsync(db);
+        await SeedDataToppings.InitializeAsync(db);
     }
 }
 

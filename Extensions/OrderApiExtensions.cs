@@ -10,6 +10,12 @@ public static class OrderApiExtensions
             return TypedResults.Ok(specials.OrderByDescending(s => s.BasePrice));
         });
 
+         builder.MapGet("toppings", static async (PizzaStoreContext db) =>
+        {
+            var toppings = await db.Toppings.ToListAsync();
+            return TypedResults.Ok(toppings.OrderByDescending(s => s.Price));
+        });
+        
         var orders = builder.MapGroup("orders");
         orders.MapGet("", static async (PizzaStoreContext db) =>
         {
@@ -26,10 +32,6 @@ public static class OrderApiExtensions
         orders.MapPost("", static async (PizzaStoreContext db, Order order) =>
         {
             order.CreatedTime = DateTime.Now;
-
-            // Enforce existence of Pizza.SpecialId and Topping.ToppingId
-            // in the database - prevent the submitter from making up
-            // new specials and toppings
             foreach (var pizza in order.Pizzas)
             {
                 pizza.SpecialId = pizza.Special?.Id ?? 0;

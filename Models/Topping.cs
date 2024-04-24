@@ -10,3 +10,6 @@ public class Topping
 
     public string GetFormattedPrice() => Price.ToString("0.00");
 }
+/* [JsonSourceGenerationOptions(GenerationMode = JsonSourceGenerationMode.Serialization)]
+[JsonSerializable(typeof(Topping))]
+public partial class PizzaContext : JsonSerializerContext { } */

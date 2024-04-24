@@ -32,16 +32,13 @@
 
 @code {
     Order Order => OrderState.Order;
-
     bool isError = true;
     EditContext? editContext;
-
     protected override void OnInitialized()
     {
         editContext = new(Order.DeliveryAddress);
         editContext.OnFieldChanged += HandleFieldChanged;
     }
-
     async Task PlaceOrder()
     {
         var response = await HttpClient.PostAsJsonAsync(
