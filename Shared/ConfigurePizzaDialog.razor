@@ -41,10 +41,7 @@
                             @foreach (var seleccionado in OrderState.Topping)
                             {
                                 <p>@seleccionado.Topping.Name - @seleccionado.Topping.Price </p>
-                               <button class="btn btn-success ml-auto"
-        @onclick="async (e) => { e.PreventDefault(); await OrderState.RemoveConfiguredTopping(seleccionado); }">
-    x
-</button>
+               
 
                             }
                         </div>
